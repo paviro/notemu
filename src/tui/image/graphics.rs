@@ -1,12 +1,13 @@
 //! Terminal-graphics backend: protocol detection and encoding a decoded image
-//! into a [`SlicedProtocol`] sized to fit the viewer.
+//! into a [`Protocol`] sized to fit the viewer.
 
 use notema_storage::JournalStore;
 use notema_timing as timing;
 use ratatui::layout::Size;
 use ratatui_image::{
+    Resize,
     picker::{Picker, ProtocolType},
-    sliced::SlicedProtocol,
+    protocol::Protocol,
 };
 
 use super::CacheKey;
@@ -51,7 +52,7 @@ pub(super) fn build_protocol(
     store: &JournalStore,
     picker: &Picker,
     key: &CacheKey,
-) -> Option<SlicedProtocol> {
+) -> Option<Protocol> {
     let bytes = store
         .read_entry_asset_bytes(&key.entry_path, &key.file_name)
         .ok()??;
@@ -68,8 +69,9 @@ pub(super) fn build_protocol(
     let image =
         notema_storage::decode_image_with_orientation(&bytes, Some((max_width, max_height)))
             .ok()?;
-    // `SlicedProtocol` fits the image into the area preserving aspect ratio,
+    // A single whole-image protocol (one OSC 1337 for iTerm2, not one per row):
+    // `Resize::Fit` fits the image into `bounds` preserving aspect ratio,
     // downscaling the already-capped image to the cell footprint.
     let bounds = Size::new(key.width.max(1), key.height.max(1));
-    SlicedProtocol::new(picker, image, Some(bounds)).ok()
+    picker.new_protocol(image, bounds, Resize::Fit(None)).ok()
 }

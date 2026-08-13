@@ -27,10 +27,7 @@ use ratatui::{
     layout::{Rect, Size},
     widgets::Paragraph,
 };
-use ratatui_image::{
-    picker::ProtocolType,
-    sliced::{SignedPosition, SlicedImage, SlicedProtocol},
-};
+use ratatui_image::{Image, picker::ProtocolType, protocol::Protocol};
 
 use ascii::AsciiArt;
 use worker::{BuildMode, BuildRequest, Built, Worker};
@@ -96,7 +93,7 @@ pub(super) struct CacheKey {
 
 enum CacheState {
     Loading,
-    ReadyGraphics(Rc<SlicedProtocol>),
+    ReadyGraphics(Rc<Protocol>),
     ReadyAscii(Rc<AsciiArt>),
     Failed,
 }
@@ -104,7 +101,7 @@ enum CacheState {
 /// `Rc`-backed handle to a finished build, cloned out of the cache so the
 /// borrow can be dropped before painting.
 enum Ready {
-    Graphics(Rc<SlicedProtocol>),
+    Graphics(Rc<Protocol>),
     Ascii(Rc<AsciiArt>),
 }
 
@@ -257,11 +254,16 @@ impl ImageRuntime {
         match ready {
             Some(Ready::Graphics(proto)) => {
                 // Aspect-preserving fit may letterbox — center the rendered cells.
+                // `Image` draws at the top-left of its area and skips rendering if
+                // the protocol is larger than it, so pass an exact centered rect.
                 let rendered = proto.size();
-                let x = (area.width.saturating_sub(rendered.width) / 2) as i16;
-                let y = (area.height.saturating_sub(rendered.height) / 2) as i16;
-                let position = SignedPosition::from((x, y));
-                frame.render_widget(SlicedImage::new(&proto, position), area);
+                let rect = Rect {
+                    x: area.x + area.width.saturating_sub(rendered.width) / 2,
+                    y: area.y + area.height.saturating_sub(rendered.height) / 2,
+                    width: rendered.width.min(area.width),
+                    height: rendered.height.min(area.height),
+                };
+                frame.render_widget(Image::new(&proto), rect);
             }
             Some(Ready::Ascii(art)) => {
                 // Already sized to fit inside `area`; center it.

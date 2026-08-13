@@ -9,7 +9,7 @@ use std::{
 };
 
 use notema_storage::JournalStore;
-use ratatui_image::{picker::Picker, sliced::SlicedProtocol};
+use ratatui_image::{picker::Picker, protocol::Protocol};
 
 use super::CacheKey;
 use super::ascii::{self, AsciiArt};
@@ -25,7 +25,7 @@ pub(super) enum BuildMode {
 
 /// A finished build coming back from the worker, tagged by backend.
 pub(super) enum Built {
-    Graphics(SlicedProtocol),
+    Graphics(Protocol),
     Ascii(AsciiArt),
 }
 
