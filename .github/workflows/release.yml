@@ -156,7 +156,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@2c7215f132e9ebf062739d9130488b56d53c060c # master
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
         with:
           toolchain: 1.96.0
           targets: ${{ matrix.target }}
@@ -170,7 +170,7 @@ jobs:
         with:
           version: 0.16.0
           cache-key: ${{ matrix.target }}
-      - uses: taiki-e/install-action@1beb33eee6d086258184383af9a538940be190ed # v2
+      - uses: taiki-e/install-action@742a3317eac7bd62f91cd888b4eead5e784ba833 # v2
         with:
           tool: ${{ matrix.zigbuild && 'cargo-about@0.9.1,cargo-zigbuild@0.23.0' || 'cargo-about@0.9.1' }}
       # The glibc_floor suffix pins the glibc floor; the binary still lands in
@@ -267,11 +267,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@2c7215f132e9ebf062739d9130488b56d53c060c # master
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
         with:
           toolchain: 1.96.0
           targets: ${{ matrix.target }}
-      - uses: taiki-e/install-action@1beb33eee6d086258184383af9a538940be190ed # v2
+      - uses: taiki-e/install-action@742a3317eac7bd62f91cd888b4eead5e784ba833 # v2
         with:
           tool: cargo-about@0.9.1
       - run: cargo build --release -p notema --locked --target ${{ matrix.target }} --features fuse
@@ -315,7 +315,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@2c7215f132e9ebf062739d9130488b56d53c060c # master
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
         with:
           toolchain: 1.96.0
           targets: i586-unknown-linux-musl
@@ -342,7 +342,7 @@ jobs:
           # name for the x86_64 *host* linker (used by build scripts); on this
           # runner the host toolchain is plain gcc, so bridge that name too.
           sudo ln -sf "$(command -v gcc)" /usr/local/bin/x86_64-unknown-linux-gnu-gcc
-      - uses: taiki-e/install-action@1beb33eee6d086258184383af9a538940be190ed # v2
+      - uses: taiki-e/install-action@742a3317eac7bd62f91cd888b4eead5e784ba833 # v2
         with:
           tool: cargo-make@0.37.24,cargo-about@0.9.1
       # setup-cross-toolchain-action sets CARGO_BUILD_TARGET to i686-musl; the
@@ -389,7 +389,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@2c7215f132e9ebf062739d9130488b56d53c060c # master
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
         with:
           toolchain: 1.96.0
           targets: aarch64-linux-android
@@ -401,7 +401,7 @@ jobs:
             echo "CC_aarch64_linux_android=$TOOLCHAIN/aarch64-linux-android24-clang"
             echo "AR_aarch64_linux_android=$TOOLCHAIN/llvm-ar"
           } >> "$GITHUB_ENV"
-      - uses: taiki-e/install-action@1beb33eee6d086258184383af9a538940be190ed # v2
+      - uses: taiki-e/install-action@742a3317eac7bd62f91cd888b4eead5e784ba833 # v2
         with:
           tool: cargo-about@0.9.1
       - run: cargo build --release -p notema --target aarch64-linux-android --locked
@@ -463,7 +463,7 @@ jobs:
         with:
           persist-credentials: false
       # Tier 3 has no rustup target to add; build-std needs rust-src instead.
-      - uses: dtolnay/rust-toolchain@2c7215f132e9ebf062739d9130488b56d53c060c # master
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
         with:
           toolchain: ${{ matrix.toolchain }}
           targets: ${{ matrix.build_std && '' || matrix.target }}
@@ -473,7 +473,7 @@ jobs:
         with:
           version: 0.16.0
           cache-key: ${{ matrix.target }}
-      - uses: taiki-e/install-action@1beb33eee6d086258184383af9a538940be190ed # v2
+      - uses: taiki-e/install-action@742a3317eac7bd62f91cd888b4eead5e784ba833 # v2
         with:
           tool: cargo-about@0.9.1,cargo-zigbuild@0.23.0
       - if: ${{ !matrix.build_std }}
@@ -542,11 +542,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@2c7215f132e9ebf062739d9130488b56d53c060c # master
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
         with:
           toolchain: 1.96.0
           targets: ${{ matrix.target }}
-      - uses: taiki-e/install-action@1beb33eee6d086258184383af9a538940be190ed # v2
+      - uses: taiki-e/install-action@742a3317eac7bd62f91cd888b4eead5e784ba833 # v2
         with:
           tool: cargo-about@0.9.1
       - run: cargo build --release -p notema --target ${{ matrix.target }} --locked
@@ -589,7 +589,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@2c7215f132e9ebf062739d9130488b56d53c060c # master
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
         with:
           toolchain: 1.96.0
           targets: ${{ matrix.target }}
@@ -614,7 +614,7 @@ jobs:
           TEAM_ID="$(printf '%s' "$APPLE_DEVELOPER_ID" | sed -n 's/.*(\(.*\)).*/\1/p')"
           xcrun notarytool store-credentials notema-notary \
               --apple-id "$APPLE_USERNAME" --password "$APPLE_PASSWORD" --team-id "$TEAM_ID" >/dev/null
-      - uses: taiki-e/install-action@1beb33eee6d086258184383af9a538940be190ed # v2
+      - uses: taiki-e/install-action@742a3317eac7bd62f91cd888b4eead5e784ba833 # v2
         with:
           tool: cargo-make@0.37.24,cargo-about@0.9.1
       - run: cargo make ${{ matrix.task }}
@@ -677,7 +677,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: dtolnay/rust-toolchain@2c7215f132e9ebf062739d9130488b56d53c060c # master
+      - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
         with:
           toolchain: 1.96.0
           targets: ${{ matrix.target }}
@@ -704,7 +704,7 @@ jobs:
           TEAM_ID="$(printf '%s' "$APPLE_DEVELOPER_ID" | sed -n 's/.*(\(.*\)).*/\1/p')"
           xcrun notarytool store-credentials notema-notary \
               --apple-id "$APPLE_USERNAME" --password "$APPLE_PASSWORD" --team-id "$TEAM_ID" >/dev/null
-      - uses: taiki-e/install-action@1beb33eee6d086258184383af9a538940be190ed # v2
+      - uses: taiki-e/install-action@742a3317eac7bd62f91cd888b4eead5e784ba833 # v2
         with:
           tool: cargo-make@0.37.24,cargo-about@0.9.1
       - run: cargo make ${{ matrix.task }}
@@ -803,13 +803,13 @@ jobs:
       # Provenance links each zip to this workflow run; verify with
       # `gh attestation verify <zip> --repo <owner>/<repo>`.
       - name: Attest build provenance
-        uses: actions/attest-build-provenance@0f67c3f4856b2e3261c31976d6725780e5e4c373 # v4.1.1
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
         with:
           subject-path: |
             assets/*.zip
             assets/SHA256SUMS
       - name: Publish
-        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3.0.2
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           tag_name: ${{ github.ref_name }}
           fail_on_unmatched_files: true
